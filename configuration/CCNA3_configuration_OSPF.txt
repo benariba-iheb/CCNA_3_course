@@ -1,0 +1,73 @@
+====================
+configuration OSPF:
+====================
+
+- activation du processus OSPF:
+	R(config)# router ospf {prcess-ID}		# 		0 < prcess-ID < 65535 
+
+- configuration du router-ID:
+	R(config-router)# router-id {router-ID}	# 		le router-ID a la forme d'une @IPv4
+												# 		si le router-ID est modifier on doit redemarer le processus OSPF
+												#		si le routeur ne supporte pas cette commande. on definie sa priorite en adressant une interface loopback
+
+- configuration OSPF a partire du mode de configuration globale:
+		R(config-router)# network {@reseau} {wildcard-mask(generique)} area {area-id}		# 		best practice dans OSPF a zone unique est de mettre le area-ID egale a 0
+																									# 		certaines version IOS autorisent l'utilisation du masque reseau au lieux du masque generique
+		
+		R(config-router)# network {@IP de l'interface} 0.0.0.0 area {area-id}					# 		dit au routeur de publier le reseau connecte a l'interface qui a cette @IP
+																									#		cela a pour but de reduire le calcule des masques generiques
+
+- configuration OSPF a partir d'une une interface:
+		R(config)# interface {interface-ID}						# 		selection de l'interface qui vat utiliser OSPF
+		R(config-if)# ip ospf {process-id} area {area-id}
+
+- configuration d'une route par default:
+		R(config)# ip route 0.0.0.0 0.0.0.0 {next-hop@}				# 		si c'est une connexion vers internet on utilise seulement le "interface-ID"
+		R(config)# ip route 0.0.0.0 0.0.0.0 {interface-ID}			# 		doit etre deja configurer avec une route par default
+		R(config-router)# default-information originate			#		permet au routeur d'etre a l'origine des routes par defaults 
+
+- configuration d'une interface passive:							#		par default les msg hello sont diffuser par tt les interfaces configurer avec OSPF mais cela causes 2 problemes
+		R(config-router)# passive-interface {interface-id}		#		utilisation futiles de la bande passante et des ressources / cause un rique de securite
+																	#		les interfaces passives sont utilisees dans les interfaces connectees directement aux LAN ou les interfaces loopback.
+
+- configurer la priorite OSPF d'une interface:
+		R(config-if)# ip ospf priority {priority} 					#		0 < priority < 255
+																	#		si une interface est configurer avec 0, elle ne deviendra jamais DR ou BDR. 
+
+- configurer le cout OSPF:
+		R1(config-if)# ip ospf cost {cost}
+
+-configurer la bande de referance pour le calcule du cout:
+		R(config-router)# auto-cost reference-bandwidth {bandwidth}		#		cette commande ne s'applique que sur le routeur configure
+																				#		bande de referance 1GB/s = 1,000,000,000 
+
+!! il n'est recommande configurer le BANDWIDTH d'une interface pour changer son cout. !!
+
+-modifier le HELLO-interval:
+		R(config-if)# ip ospf hello-interval {sec}			# 		pour renitialiser les valeur:  	R(config-if)# no ip ospf hello-interval
+
+-modifier le DEAD-interval:
+		R(config-if)# ip ospf dead-interval {sec}			# 		pour renitialiser les valeur:  	R(config-if)# no ip ospf dead-interval
+
+- redemarer le processus OSPF:
+		R# clear ip ospf process
+
+-simuler un reseau LAN avec les interfaces loopback:			# 		par default, le masque generiques des resaux loopback partage aux autres routeur est /32
+		R(config-if)# interface Loopback {loopback-ID} 			#		on mait cette commande pour diffuser le masque qu'on configurer aux autres routeurs 
+		R(config-if)# ip ospf network point-to-point
+
+
+------------------------
+visualisation:
+------------------------
+-  verification de la configuration d'une interface:
+		R# show ip ospf interface {interface-ID}
+
+-verification des information de configuration OSPF:
+		R# show ip protocols
+
+- verification du router-ID:
+		R# show ip protocols | include Router ID
+
+- verification du voisinage:
+		R# show ip ospf neighbor

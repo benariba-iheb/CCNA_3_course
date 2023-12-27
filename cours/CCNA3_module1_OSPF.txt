@@ -1,0 +1,139 @@
+----------------------------
+chapitre1: OSPF
+----------------------------
+
+- OSPF est un protocole a etat de lien develope pour ramplcer RIP.
+
+- OSPF a plsr version:
+	~ OSPFv1	: protocole de base utilisant l'algorithme OSPF.
+	~ OSPFv2	: introduit la notion de zone et de routage par zone.
+	~ OSPFv3	: OSPFv2 adapte aux reseaux IPv6 / OSPFv3 s'execute en parallele a OSPFv2(chacun ses table et informations).
+
+
+- types de messages echanges dans OSPF:  
+	~ HELLO							: (type 1) messages echange pour etablir une connexion OSPF.
+	~ DBD(Database Description)		: (type 2) paquets de description de la base de donnees.
+	~ LSR(link state request)			: (type 3) demande d'information supp pour la DBD du routeur voisin.
+	~ LSU(LS Update)					: (type 4) reponse aux LSR. contient plsr LSA.
+	~ LSA(LS Advertisement)			: contient l'etat et le cout.
+		- LSA(type1) 	: LSA du routeur .
+		- LSA(type2) 	: verifie la synchronisation de la LSDB .
+		- LSA(type3/4) 	: LSA resumees .
+		- LSA(type5) 	: LSA externe du AS(Autonomous System).
+		- LSA(type6) 	: LSA OSPF multi-diffusion.
+		- LSA(type7) 	: pour lesx zone Not-so-Stubby.
+		- LSA(type8) 	: LSA d'attributs externes pour BGP.
+	~ LSAck(LS Acknowledgment)	: (type 5) accuse de reception d'une LSU.
+
+	
+-paquets OSPF:
+		[frame-header] | [IP-header] | [OSPF-header] | [OSPF-msg]
+    contenu de ([OSPF-header] | [OSPF-msg]):
+	~ version (8bits) 			:
+	~ type (8bits)				:
+	~ packet-lenght (16bits) 	:
+	~ router-ID (32bits)		:
+	~ zone-ID (32bits)			:
+	~ control-sum (16bits)		:
+	~ auType(16bits)			:
+	~ authentication (32bits)	:
+	~ authentication (32bits)	:
+	~ netmask(32bits)			: 
+	~ hello-interval(16bits)	: le temps entre l'envoie des msg HELLO (par default = 10).
+	~ option(8bits)				:
+	~ router-priority(8bits)	:
+	~ dead-interval(32bits)	: le temps necessaire avant de considerer la connexion rompue ( par default = 40 (4 fois le HELLO-interval) ).
+	~ DR(32bits)				:
+	~ BDR(32bits)				:
+	~ neighbors-list(32bits)	:
+
+	
+- les bases de donnees utilisees dans OSPF:
+	~ base de donnees de contiguite(adjacency DB)		: liste des routeurs voisin [show ip ospf neighbor].
+	~ base de donnees d'etat de lien(link-state-DB)		: listes des informations topologique du reseau / ts les routeurs dans la meme zone ont le meme LSDB [show ip ospf database].
+	~ base de donnees de reacheminement(forwarding)	: routing information generated from the algorithme [show ip route].
+
+- dans OSPF les routes sont definit par cout. le cout est la valeur cumulatives des liens qui menent a la destination.
+
+- OSPFv2 supporte le routage hierarchique base sur les zones. chaque routeur dans la meme zone a la meme LSDB.
+
+- best practice pour single-area OSPF est d'utiliser la zone 0.
+
+- multi-zone OSPF:
+	~ l'algorithme OSPF est un processus intensive du cote CPU. c pour cela qu'on ajouter la notion de zones.
+	~ OSPF utilise ABR(Area Border Routers) pour delegue les informations d'une zone a une autre.
+	~ les routeurs dans les autres zones recoivent des LSDB mis a jour sans refaire le calcule SPF.
+	~ table de routage petites / moins d'OVERHEAD LSU / moins de calcule SPF .
+
+
+- les operation OSPF:
+	~ etablire le voisinage	: utilise les HELLO packets pour savoire s'il y a un routeur OSPF actif a cote.
+	~ echange de LSA			: chaque routeur diffuse des LSA contenant (ces informations + les information qu'il a aquerit).
+	~ construire la LSDB		: avec ces informations echangees les routeurs du reseau constuisent la LSDB.
+	~ executer l'algorithme OSPF.
+	~ choisire les routes		: choisir le meilleur chemin.
+
+
+
+- fonctionnement OSPF:
+	etape 1:
+		~ DOWN		: pas d'echange d'informations .
+							--> passe a l'etat suivant en envoyant des HELLO sur l'interface.
+		
+		~ INIT			: envoie des HELLO(contient router-ID du voisin) tt les 10s pour etablire un voisinage  / les HELLO sont envoyes a l'adresse multi-diffusion 224.0.0.5  .
+							--> passe a l'etat suivant en recevant un HELLO .
+		
+		~ TWO-WAY	: passe a cette etat apres avoire recue un HELLO d'un voisin / commence a utiliser l'adresse IP du voisin apres l'avoire recue dans le HELLO.
+								- point-to-point	: passe a l'etape suivante.
+	
+	etape 2:
+								- multi-access		: que se soit un BMA(broadcast-MA) ou NBMA(no-broadcast-MA) une election d'un DR et d'un BDR doit etre faite
+															- un routeur est selectionne au hasard pour examiner les autres routeurs qui sont dans l'etat two-way.
+															- les paquets avec une priorite de 0 dans le HELLO ne seront pas examines.	#   0 < router-priorite < 255 .
+															- le routeur avec la plus haute priorite est elu sinn celui avec le plus haut router-ID sinn celui connecte au reseau qui l'adresse IP la plus haute.
+															- s'il y a pas de DR elu le BDR devient DR et le calcule se refait pour elire un BDR .
+															- le DR et le BDR construisent les adjacences avec les autres	.
+	
+	etape 3:														
+		~ EXstart		: etablissement d'une relation maitre(router-ID eleve) esclave entre les srouteurs .
+		
+		~ EXCHANGE	: le maitre initie l'echange de paquets (type2) DBD qui ont un num de sequence. le recepteur accuse reception avec un LSAck comportant le num de sequance.
+									- s'il y a pas de nouvelles informations echangees. les routeurs passent a l'etat FULL.
+									- sinn il passent a l'etat LOADING.
+		
+		~ LOADING		: le routeur qui les anciennes entrees  envoie des LSR (type3) pour maj sa LSDB a l'autre routeur. ce dernier envoie des LSU(type4)  qui seront accusees par des LSAck. 
+		
+		~ FULL			: passe a cette etat apres la terminaison du LOADING et la synchronisation des LSDB.
+
+	!! (DROther utilise l'@ multicast 224.0.0.6 pour diffuser leur informations. seul le DR et BDR ecoute sur cette @. !!
+	!! le DR utilise ensuite l'@ multicast 224.0.0.5 pour diffuser les LSA aux autres routeurs du reseaux multi-access. !!
+	
+	etape 4:
+		--> apres avoire etablie leur LSDB les routeurs les routeurs utilise l'algorithme OSPF pour creer leur table de routage.
+	
+	etape 5:
+		--> si un voisinage est rompue le routeur evoie une LSU a son voisin ou DR/BDR qui diffuseront a leur tour ce msg aux autres routeurs.
+			s'il y a pas de changement les informations sont rafraichies. les LSA ont une durree de vie de 30min.
+
+
+
+- types de voisinage OSPF:
+	~ FULL / DROther 		: on trouve cette etat dans un DR ou BDR qui est connecte a un DROther / les 2 routeurs peuvent echanger tt types  d'information OSPF.
+	~ FULL / DR 			:  veut dire qu'il y a un voisinage avec le DR du reseau / les 2 routeurs peuvent echanger tt types  d'information OSPF.
+	~ FULL / BDR 			:  veut dire qu'il y a un voisinage avec le BDR du reseau / les 2 routeurs peuvent echanger tt types  d'information OSPF.
+	~ 2-WAY / DROther		: disigne une connexion entre 2 routeurs DROther / les 2 routeurs ne peuvent echanger que des HELLO.
+			
+! le protocole OSPF n'est pas preemptive ce qui veut dire que DR elu resterra elu que si:
+	~ le DR echoue.
+	~ le processus OSPF echoue ou est arrete.
+	~ l'interface du DR passe a l'etat DOWN.
+! s'il y a un BDR deja elu dans le resau et qu'on vient de configurer un routeur avec un router-ID plus haut le BDR remplacera tjr le DR en cas d'echec.
+! si on veut qu'un nv routeur configurer devient DR on doit redemmarer le processus OSPF 2 fois sur les routeurs.
+ 
+- le cout OSPF:
+ 	~ le cout-OSPF = bande passante de referance / bande passante de l'interface.
+ 	~ la bande passante de referance par default est egale a 1GBit/s.
+ 	~ si la bande passante de l'interface est superieur a la bande passante de referance le cout serra egale a 1 car OSPF n'accepte pas de fraction.
+
+- le routeur ASBR: (Autonomous System Boundry Router).
+	~ dans la terminologie OSPF le routeur ASBR est le routeur qui relie un domaine OSPF a un domaine non-OSPF.

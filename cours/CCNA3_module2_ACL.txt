@@ -1,0 +1,44 @@
+==============
+chapitre4: ACL
+==============
+
+- les ACL sont une serie de commandes utilisees pour filtrer le trafic dans un reseau base sur les informations du packet-header.
+	une commande dans un ACL est appelee ACE(access list entry)
+	
+-  qd le trafic entre dans le routeur  il est compare a chaque entree de la liste sequentiellement 
+
+-le but des ACL:
+	~ limiter le trafic dans le reseau
+	~ controle du flux de donnees
+	~ augmente le niv de securite
+	~ filtrage du trafic
+	
+- le filtrage de paquet se fait au niveau de la couche 3 et 4 du modele OSI
+	~ standard ACL 	: niv 3
+	~ extended ACL 	: niv3 / niv 4 
+
+- types d'operation OSPF:
+	~ inbound ACL 	: appliquees appliquees sur les paquets entrant au routeur / le filtrage se fait avant le routage des paquets
+	~ outbound ACL 	: appliquees appliquees sur les paquets sortant au routeur
+!! les ACL ne s'applique pas sur les paquets generes par le routeur lui-meme !!
+
+
+- fonctionement ACL:
+	~ le routeur tire l'@IPv4 du paquet
+	~ il la compare avec chaque entree dans la liste
+	~ s'il y a un match le paquets ne sera pas compare aux restes des ACE
+	~ si l'@ tiree ne figure pas dans les ACE. le paquet sera supprimer car il y a un "implicit deny" en bas de chaque liste ACL.
+
+- dans une interface utilsant IPv4 et IPv6 seulement 4 ACLs peuvent etre appliquees [ (inbound/outbound)IPv4 / (inbound/outbound)IPv6 ]
+
+- types d'ACL:
+	~ ACL numerotee	: 
+			- ACL standard      :    1 < ACL-std < 99  &  1300 < ACL-std < 1999 
+			- ACL etandue       : 100 < ACL-exd < 199  &  2000 < ACL-exd < 2699
+			 
+	~ ACL nommee	:
+			le type de l'ACL nomme est definie lors de la configuration
+
+- placement des ACL:
+	~ les ACL standard sont typiquement placee pret de la destination
+	~ les ACL etandue sont typiquement placee pret de la source

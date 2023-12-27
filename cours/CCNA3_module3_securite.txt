@@ -1,0 +1,210 @@
+=========================
+chapitre3: cyber-securite:
+=========================
+
+- termes techniques:
+	~ Assets(atouts) 			:  tous ce qui represente une valeur pour l'entreprise (humain, materiels, donnees ...)
+	~ vulnerabilitees			:  c'une faiblesse dans le systeme ou son designe qui peut etre exploite par une menace.
+	~ threat(menace)			:  c'est le danger potentiel qui peut toucher le system.
+	~ exploit					:  c'est le mecanisme qui prend l'avantage d'une menace.
+	~ mitigation/Attenuation	:  les contre-mesures qui reduisent la probabilitees des menace qui peuvent etre exploitees.
+	~ risk						:  c'est la probabilite qu'une menace exploite la vulnerabilite d'un atout, dans le but d'affecter negativement le system.
+	
+- vecteur d'attaque:  C'est le chemin par lequelle un acteur de menace peut acceder a un serveur/hote/reseau.
+					    ils proviennent soit de l'interieur ou de l'exterieur.
+
+- les menaces internes ont le potentiel de causer des dommages plus importantes
+
+- vecteur de perte de donnees:
+	~ E-mail/social-network		:  couriers ou msg interceptes
+	~ unencrypted devices		:  si les donnees ne sont pas chiffrees, elles facilement seront extraites. 
+	~ cloud storage device		:  les donnees sensibles peuvent etre perdues si l'acces au cloud est compromis
+	~ removable media			:  risque d'extraction de donnees sensible a l'aide de ces peripheriques.
+	~ hard copy					:  les donnees confidentielles doivent etre dechiquetees  lorsqu'elles ne sont plus necessaires.
+	~ improper access control	:  mdp faible ....
+
+- les vecteurs de perte de donnees entraine:	
+	~ endommage la reputation/image de la marque.
+	~ perte de client.
+	~ perte de revenue.
+	~ actions en justice / amendes.
+	~ couts et effort supp pour y remedier.
+	
+- outils de securite:
+	~ passwd cracker							: utilise pour craquer ou recuperer un mdp [ John the Ripper / Ophcrack / L0phtCrack / THC Hydra / RainbowCrack / Medusa ]
+	~ piratage sans fil						: utilise pour le piratage intentionnel d'un reseau sans fil [ Aircrack-ng / Kismet / InSSIDer / KisMAC / Firesheep / NetStumbler ]
+	~ network scanning(analyse) 			: incite la cible a ouvrire des port TCP/UDP pour les scanner [ Nmap / SuperScan / Angry IP Scanner / NetScanTools ] 
+	~ Packet Crafting Tools					: utilser pour tester la robustesse d'un FW en forgeont des paquets [ Hping / Scapy / Socat / Yersinia / Netcat / Nping / Nemesis ]
+	~ Packet Sniffers							: capture et analyse du trafic [ Wireshark / Tcpdump / Ettercap / Dsniff / EtherApe / Paros / Fiddler / Ratproxy / SSLstrip ]
+	~ Rootkit Detectors						: verification de l'integrite des repertoires et fichiers [ AIDE / Netfilter / PF: OpenBSD Packet Filter ]
+	~ Fuzzers to Search Vulnerabilities		: trouver des vunerabiliter de securite dans les PC [ Skipfish / Wapiti / W3af ]
+	~ Forensic Tools							: trouver les traces ou evidances qui existe dans un PC [ Sleuth Kit / Helix / Maltego / Encase ] 
+	~ Debuggers								: utilise pour le reverse ingeneering des fichiers binaires pour trouver des failles [ GDB / WinDbg / IDA Pro / Immunity Debugger ]
+	~ Encryption Tools						: utilise des algo pour l'encodage de donnees sensibles [ VeraCrypt / CipherShed / OpenSSH / OpenSSL / Tor / OpenVPN / Stunnel ]
+	~ Vulnerability Exploitation Tools		: verifie si un hote est vulnerable a une attaque [ Metasploit / Core Impact / Sqlmap / Social Engineer Toolkit / Netsparker ]
+	~ Vulnerability Scanners					:  utilise pour scanner les ports ouverts et les vunerabilitees communes [ Nipper / Secunia PSI / Core Impact / Nessus v6 / SAINT / Open VAS ]
+
+- types d'attaques:
+	~ Eavesdropping (ecoute)			: (sniffing) capture et ecoute du trafic reseau. 
+	~ data modification				: modification du trafic apres capture.
+	~ Address Spoofing				: (usurpation d'@) construire un paquet IP qui semble ligitime.
+	~ Password-Based				: utiliser un nom d'utilisateur valide pour ensuite essayer de trouver son mdp ou trouver des information supp sur le reseau.
+	~ Denial of Service 				: empecher un ou plsr utilisateurs d'acceder a un service dans le reseau generalement en surchargeant le serveur par des requetes.
+	~ Man-in-the-Middle				: se positioner au milieu d'une communication pour surveiller, capturer, controler la communication.
+	~ Compromised-Key				: apres qu'un acteur de mencae mait la main sur une cle secrete cette cle devient compromise et il pourra donc acceder a une communication securitsee.
+	~ Sniffer (renifleur)				: un renifleur est une application qui capture, lit, surveille les echanges de donnees reseau.
+
+
+-types de virus:
+	~ Virus du secteur de démarrage		: attaque le secteur de démarrage, la table de partition de fichiers ou le système de fichiers.
+	~ Virus du micrologiciel					: attaque le micrologiciel du périphérique.
+	~ Virus contenu dans les macros		: utilise malicieusement la fonction de macro de MS Office ou d'autres applications.
+	~ Virus de programme					: s'insère dans un autre programme exécutable.
+	~ Virus de script							: attaque l'interpréteur du système d'exploitation utilisé pour exécuter des scripts.
+
+-types de chevale de troie:
+	~ Accès distant								: permet un accès à distance non autorisé.
+	~ Envoi de données							: fournit à l'acteur de menace des données sensibles, telles que des mots de passe.
+	~ Destructeur									: endommage ou supprime des fichiers.
+	~ Proxy										: utilisera l'ordinateur de la victime comme périphérique source pour lancer des attaques et effectuer d'autres activités illégales.
+	~ FTP											: active les services de transfert de fichiers non autorisés sur les terminaux.
+	~ Désactivateur de logiciel de sécurité		: empêche les logiciels antivirus ou les pare-feu de fonctionner.
+	~ Déni de service (DoS)						: ralentit ou arrête l'activité réseau.
+	~ Enregistreur de frappe						: voler des informations confidentielles, telles que numéros de carte de crédit, en enregistrant les frappes de touches saisies.
+
+- autres types de MALWARE:
+	~ Adware					: logiciel publictaire qui peut causer une redirection de page vers un site malveillant.
+	~ Ransomware			: un logiciel qui crypte les fichier de la cible jusqu'a ce qu'elle paie une roncon. 
+	~ Rootkit					: utiliser pour avoire un acces privilegie a un ordinateur cible.
+	~ Spyware					: logiciel qui collecte des information sur la cible et les renvoie a l'acteur de menace.
+	~ Worm					: logiciel a replication automatique qui se propage dans le reseau en s'attachant a des logiciels ligitimes sans actions de la cible ou de l'acteur.
+
+
+									---------------------------------------------------------
+
+- les attaques reseau courantes:
+	~ reconnaissance:
+		- Effectuer une requête d'informations sur une cible (recherche par  internet).
+		- Lancer un balayage ping du réseau cible.
+		- Lancer l'analyse des ports des adresses IP actives.
+		- Exécuter des scanners de vulnérabilité.
+		- Exécuter des outils d'exploitation.	
+		
+	~ Accès:
+		- mdp		 		: l'acteur de menace tente de découvrir les mots de passe des systèmes critiques
+		- usurpation		: le dispositif d'acteur de menace tente de se faire passer pour un autre dispositif en falsifiant les données.
+		
+	~ Ingénierie Sociale:
+		- Pretexting (pretexte)		: pretendre avoir besoin de données personnelles de la cible.
+		- Phishing(Hameçonnage)	: e-mail frauduleux déguisé en un source légitime et fiable pour inciter les cibles a y acceder.
+		- Spear phishing				: une attaque de phishing ciblée adaptée à un individu ou à une organisation spécifique.
+		- Spam							: il s'agit d'un courrier électronique non sollicité qui contient souvent liens nuisibles.
+		- Something for Something	: (contrepartie)  acteur de menace demande des informations personnelles à une partie en échange de quelque chose.
+		- Baiting						: laisser un appat pour la cible comme USB veruse.
+		- Impersonation				: l'acteur de menace prétend d'être quelqu'un d'autre pour gagner la confiance d'une victime.
+		- Tailgating					: utiliser l'ingenieurie sociale pour acceder a des sites non autorise. 
+		- Shoulder surfing			: regarde discrètement par-dessus l'épaule de quelqu'un.
+		- Dumpster diving			: l'acteur de menace fouille dans des poubelles pour découvrir les documents confidentiels.
+	
+	~ DOS/DDOS:
+		- Quantité de trafic écrasante.
+		- Paquets formatés de manière malveillante.
+	
+
+									---------------------------------------------------------
+									
+									
+- types d'attaques sur IPv4/IPv6:
+	~  ICMP: utiliser pour analyser/cartographier le reseau et lancer des DOS. chaque type de msg ICMP presente une vulnerabilitee: 
+		- Demande et réponse d'écho ICMP		:  vérification de l'hôte / attaques DoS.
+		- ICMP inaccessible						:  reconnaissance / balayage de réseau.
+		- Réponse de masque ICMP				: mapper un réseau IP.
+		- Redirection ICMP						: attaque MITM.
+		- Découverte du routeur ICMP			: injecter des entrées de route fausses dans la table de routage d'un hôte cible.
+		
+- 
+	~ amplification et de réflexion		: empêcher les utilisateurs légitimes d'accéder aux informations ou aux services à l'aide d'attaques DoS et DDoS.
+			- amplification				: (exmpl) envoyer un msg multi-cast avec une @src usurper.												#peut etre basees sur DNS et NTP
+			- reflexion						: l'amplification vat  solliciter les recepteurs de ce msg a renvoyer plsr msg a la cible.
+			
+	~ usurpation d'adresse(spoofing)		:  Les acteurs de menace usurpent l'adresse IP source dans un paquet IP.
+			- non-aveugle						: L'acteur de menace peut voir le trafic qui est envoyé entre l'hôte et la cible.				# inspection de paquets
+			-aveugle							: L'acteur de menace ne peut pas voir le trafic qui est envoyé entre l'hôte et la cible.		# DOS
+			
+	~ MITM									
+	~ Détournement de session(hijacking)	: Les acteurs de menace accèdent au réseau physique, puis utilisent une attaque MITM pour détourner une session.
+		
+
+									---------------------------------------------------------
+									
+								
+- types d'attaques TCP/UDP:
+	TCP:
+		~ inondation TCP SYN				: exploite le "three-way-handshake" pour generer une attaque DoS
+		~ réinitialisation du TCP				: utilise pour mettre fin aux communications TCP entre deux hotes. en envoyant un TCP-FIN avec l'@src de la cible.
+		~ Détournement de session TCP	: L'acteur de menace usurpe l'adresse IP d'un hote, predit le numero de sequence suivant et envoie un ACK a l'autre hote. En cas de succes, l'acteur pourrait envoyer, mais pas recevoir, des données de l'appareil cible.
+	UDP:
+		~ inondation UDP						:  L'acteur de menace utilise un outil comme UDP-Unicorn ou Low-Orbit-Ion-Cannon pour envoyer  flot de paquets UDP.
+
+
+- types d'attaques ARP:
+	~ Empoisonnement de cache ARP 		: l'acteur de menace envoie des "gratuitous ARP" a la cible pretendant etre le routeur et au routeur pretendant etre la cible.
+	~ ARP Spoofing							: usurpation d'une @mac.
+
+
+- types d'attaques DNS:
+	DNS resolver atacks:
+		~ DNS cache poisoning attacks			:  envoient des informations falsifiees sur les ressources d'enregistrement (RR) vers un resolveur DNS pour rediriger les utilisateurs vers des sites malveillants.
+		~ DNS amplification and reflection 		: utiliser des attaques DoS ou DDoS sur les résolveurs ouverts DNS pour augmenter le volume des attaques et masquer la véritable source d'un attaque.
+		~ DNS resource utilization attacks		: Une attaque DoS qui consomme les ressources des résolveurs ouverts DNS. pour négativement affecter les opérations du résolveur.
+	
+	DNS Stealth Attacks:
+		~ Fast Flux								: technique pour masquer leurs sites de livraison de phishing et de logiciels malveillants derrière un réseau DNS qui change rapidement.
+		~ Double IP Flux							: technique pour changer rapidement le nom d'hôte en mappages d'adresses IP et également pour changer le serveur de noms faisant autorité.
+		~ Domain Generation Algorithms		: technique utilisee dans les logiciels malveillants pour générer aléatoirement des noms de domaine qui peuvent ensuite être utilisés comme points de rendez-vous.
+		
+	DNS Domain Shadowing Attacks: (observation de domaine)		: collecte les informations d'identification du compte de domaine afin de créer silencieusement plusieurs sous-domaines à utiliser pendant les attaques.
+
+	DNS Tunnellisation Attacks:  placent le trafic non DNS dans le trafic DNS. 
+									Cette méthode contourne souvent les solutions de sécurité lorsqu'un acteur de menace souhaite communiquer avec des bots à l'intérieur d'un réseau protégé, ou exfiltrer des données de l'organisation. 
+									souvent les communication DNS ne sont pas controlees.
+		
+- types d'attaques DHCP:
+	~ Attaques par usurpation DHCP	: prendre l'identitee de serveur DHCP
+		- Passerelle par défaut incorrect 
+		- Serveur DNS incorrect 
+		- Adresse IP incorrecte
+
+
+									---------------------------------------------------------
+									
+									
+- CIA Triad:
+	~ Confidentialité
+	~ Intégrité
+	~ Disponibilité
+
+- les elements d'une communication securisee:
+	~ Intégrité des données				: garantit que le msg n'a pas ete modifie / utilise le "HASHING" [MD5 | SHA | SHA2 ]
+	
+	~ Authentification d'origine 			: garantit que le msg provient reellement de qu'il declare / utilise le HMAC
+	
+	~ Confidentialité des données		: Garantit que seuls les utilisateurs autorisés peuvent lire le message.
+												utilise des algorythme cryptage symetriques/asymetriques.
+												
+	~ Non-répudiation des données		: Garantit que l'expéditeur ne peut pas répudier ou réfuter la validité d'un message envoyé.
+	
+
+- fonctionnement HMAC:
+	~ utilise un algorithme de cryptographie qui combine une fonction de hashage et une cle secrete.
+	~ l'expediteur genere un "digest" qui sera attache au msg envoye.
+	~ le recepteur genere un "digest" du meme msg et le compare au digest recue pour l'authetification.
+	~ HMAC est utilise dans OSPF pour garantir l'authenticite des informations partagees.
+
+- fonctionnement du cryptage:
+	~ cryptage symetrique		: utilise une cle pre-partagee pour le cryptage et decryptage de la communication [ SEAL / RC / AES / DES / 3DES  ]
+	~ cryptage asymetrique		: utilise deux cles generes une publique et l'autre privee, un msg crypte par une de ces cles ne peut etre decrypte que par sa paire
+									  protocole qui utilise des clees asymetrique [ IKE / SSL / SSH / PGP ]
+									  algorithme de cle asymetrique [ Diffie-Hellman / Digital Signature Standard (DSS) / Digital Signature Algorithm (DSA) / RSA / EIGamal / Elliptic curve techniques ]
+									   ces algorithme sont tres lent pour une communication en "BULK"
+	le cryptage asymetrique est utilise pour generer des cle qui seront utilisees dans les communication qui utilisent le cryptage symetrique.

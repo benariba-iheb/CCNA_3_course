@@ -1,0 +1,83 @@
+==================
+configuration: ACL
+==================
+
+-------------------------
+ACL standard:
+-------------------------
+- creation d'une ACL numerotee standard:  
+		R(config)# access-list {ACL-ID} {deny | permit} {source network @} {source-wildcard} [log]		# 	1 < ACL-std < 99  &  1300 < ACL-std < 1999 
+		R(config)# access-list {ACL-ID} {deny | permit} host {host @} [log]
+
+- creation d'une ACL nommee standard:
+	 	R(config)# ip access-list standard {ACL-name}
+		R(config-std-nacl)# {permit | deny} {source network@} {source-wildcard}
+		R(config-std-nacl)# {permit | deny} host {source host@} 
+		
+										-------------------------------------------------------------
+
+--------------------------
+ACL extended:
+--------------------------
+- creation d'une ACL numerotee extended:															#		100 < ACL-exd < 199  &  2000 < ACL-exd < 2699
+		R(config)# access-list {ACL-ID} {deny | permit}  {protocol}  {source@}  {source-wildcard}  [port]  {destination@}  {destination-wildcard}  [port]  [established]  [log]
+		R(config)# access-list {ACL-ID} {deny | permit}  {protocol}  host  {host@}  [port]  host {destination@}    [port]  [established]  [log]
+		
+- creation d'une ACL nommee extended:
+			 	R(config)# ip access-list extended {ACL-name}
+			 	R(config-std-nacl)# {deny | permit}  {protocol}  {source@}  {source-wildcard}  [port]  {destination@}  {destination-wildcard}  [port]  [established]  [log]
+				R(config-std-nacl)# {deny | permit}  {protocol}  host  {host@}  [port]  host {destination@}    [port]  [established]  [log]
+
+										-------------------------------------------------------------
+
+
+- modification d'une ACL:
+	 	R(config)# ip access-list standard {ACL-name || ACL-ID}
+	 	R(config-std-nacl)# no {ACE-ID}																# 	supprimer une entree ACL
+		R(config-std-nacl)# {ACE-ID} {deny | permit} ....
+
+
+- securitee des lignes VTY:
+	etape1: creation des ACL
+	
+	etape2: securiser les lignes VTY
+		R1(config)# username {uname} secret {mdp}
+		R(config)# line VTY 0 4
+		R1(config-line)# login local
+		R1(config-line)# transport input {telnet / SSH}
+
+	etape3: appliquer l;ACL sur l'interface
+		R(config-line)# access-class {access-list-number | access-list-name} { in | out } 				# 	on utilise generalement que le "in"
+
+
+- laisser des remarques:						
+		-ACL numerotee:
+			R(config)# access-list {ACL-ID} remark {remarques}						
+		-ACL nommee:
+	 		R(config)# ip access-list {standard|extended} {ACL-name}
+			R(config-std-nacl)# remark {remaruqes} 
+		 		
+		 		
+- suppression d'une ACL:
+		R(config)# no access-list {ACL-ID}  
+		R(config)# no ip access-list {standard | extended} {ACL-name}
+
+- application d'une ACL sur une interface:
+		R(config)# interface {interface-ID}
+		Router(config-if) # ip access-group {access-list-number | access-list-name} {in | out} 		#	dans les ACL standard:
+																										# 	in: verifie la source des paquets entrants
+																										#	out: verifie la source des paquets sortants
+
+
+---------------------
+verification:
+---------------------
+
+- verification de la configuration des ACL:
+		R# show access-lists 
+
+- verification de l'application de l'ACL:
+		R# show ip interface | include access
+
+-verification de la configuration globale:
+		R# show running-config | begin ip access-list

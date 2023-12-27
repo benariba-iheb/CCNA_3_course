@@ -1,0 +1,35 @@
+==================
+chapitre4: NAT/PAT
+==================
+
+- utilisation principale du NAT consiste a limiter la consommation des adresses IPv4 publiques.
+
+-Les routeurs configures pour la NAT peuvent etre configures avec une ou plusieurs adresses IPv4 publiques valides. 
+		Ces adresses publiques sont appelees collectivement «pool NAT». 
+
+- un routeur NAT operent generalement a la peripherie d'un reseau "stub".
+  un reseau stub estun reseau qui n'a qu'une seul sortie vers son reseau voisin.
+  
+- terminologie NAT:
+	~ inside @			: l'@ de l'hote qui vat etre traduite par le NAT
+	~ outside @		: l'@ de la destination
+	~ local @			: tout @ qui apparrait dans le reseau interne
+	~ global @			: tout @ qui apparrait a l'externe
+
+- types de NAT:
+	~ NAT statique			: fait un mapping un-a-un d'une @locale a une @globale generalement utilise pour les serveurs
+	~ NAT dynamique			: utilise un pool d'@ publique qui vont etre distribuer aux hotes ( l'@ publique ne sera pas libere jusqu'a ce que l'hote termine sa communication)
+	~ PAT(NAT overload)		: avec PAT une seul @publique peut etre mappee a plsr hotes en allouant les paires IP/port au lieux de toutes l'@IP
+				- PAT utilise le prochain port disponible si le port src est prit.
+				- les protocole qui n'utilisent pas la couche4 sont traite par cas (exmpl: PAT utilise le "query-ID" dans ICMPv4 au lieu du num-port pour le mapping)
+	~ NAT64					: fournit de façon transparente un accès entre les réseaux IPv6-unique et les réseaux ipv4-unique.	
+	
+- desavantages de NAT:
+	~ impacte les performances des protocole-temp-reel
+	~ certains ISP assignent une @IP privee a leur client, cela veut dire que les paquets du client vont etre traduite deux fois(CGN).
+	~ on ne peut utiliser la communication end-to-end avec les @ NATee (certain protocole ont besoin de ce type de communication)
+	~ complique l'utilisation de protocole de tunneling
+		
+
+
+
