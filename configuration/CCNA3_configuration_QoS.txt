@@ -1,0 +1,55 @@
+===================
+configuration: QoS:
+===================
+
+------------------------------
+priority queuing:
+------------------------------
+
+-par protocole:
+	R(config)# priority-list {list-ID} protocol {protocol} {high | medium | normal | low} {TCP|UDP|...} {num-port}
+	R(config)# interface {int-ID}
+	R(config-if)# priority-group {group-ID}
+
+- par ACL:
+	creation de l'ACL
+	R(config)# priority-list {list-ID} protocol {protocol} {priority} {ACL-ID}
+	
+- par interface:
+	R(config)#  priority-list {list-ID} interface {interface-ID} {priority}
+
+
+----------------------------------------
+weighted fair queuing:
+----------------------------------------
+
+	R(config)# interface {int-ID}
+	R(config-if)# bandwidth {vitesse}
+	R(config-if)# fair-queue {taille fil d'attente (bit)} {nombre de fil d'attente} {nombre fil d'attente pour RSTP}
+
+
+---------------------------------------------------------------
+class based weighted fair queuing:
+---------------------------------------------------------------
+
+- creation de l'ACL
+
+-lier l'ACL a la politique:
+	R(config)# class-map {nom-class}
+	R(config-cmap)# match access-group {ACL-ID}
+	 
+- definition de la politique:
+	R(config)# policy-map {nom-policy}
+	R(config-pmap)# class {nom-class}
+	R(config-pmap-c)# bandwidth {vitesse}
+	R(config-pmap-c)# queue-limit {max de fils} 
+
+- application des politiques:
+	R(config)# interface {interface-ID}
+	R(config-if)# service-policy output {nom-policy}
+
+
+
+
+
+
