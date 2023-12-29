@@ -1,0 +1,39 @@
+
+
+
+-----------------------------------------------------------------------------------
+SNMP(simple network management protocol):
+-----------------------------------------------------------------------------------
+
+- composant SNMP:
+	~ agent SNMP				: logiciel installe sur un peripherique qu'on veut controller pour permaitre au gestionnaire de le gerer
+	~ gestionnaire SNMP		: l'ordinateur qui execute le logiciel de gestion SNMP (GET / SET / TRAP)
+	~ MIB						: une base de donnees dans chaque peripherique (managed object) qui peut etre accessible et modifiable parSNMP
+									(le gestionnaire utilise (logiciel SNMP de l'agent) pour acceder a ca MIB 
+									
+- SNMP utilise l'UDP 161 comme port dst de l'agent et l'UDP 162 comme port dst du gestionnaire			
+
+- les "trap" sont des msg non sollicites qui alertent le gestionnaire SNMP d'un evenement		
+
+- les communautes SNMP sont les regles d'acces mis en place pour la gestion du reseau:
+	~ PUBLIC (read only)
+	~ PRIVATE (read write)
+
+-les versions SNMP:
+	~ SNMPv1: noAUTH(pas d'authentification) / noPRIV(pas de cryptage)
+	~ SNMPv2: noAUTH/noPRIV
+	~ SNMPv3: auth(MD5)/PRIV(DES)
+
+
+
+
+
+
+
+
+
+
+
+
+
+				

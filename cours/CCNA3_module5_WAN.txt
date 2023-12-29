@@ -1,0 +1,110 @@
+===============
+chapitre5: WAN
+===============
+
+- types de WAN:
+	~ WAN privee		: destinee aux organisation qui veulent un reseau privee ( garantie de service / bande passante consistante / securite )
+	~ WAN publique	: destinee aux clients qui veulent un acces internet 
+
+- topologies WAN:
+	~ point-to-point				: utilise un circuit point a point entre deux points d'extremite. implique (service de transport de couche 2 / lignes louees du point de peripherie au fournisseur / une communication transparante entre les deux points d'extremites) 
+	~ hub-and-spoke(etoile)		: utilise un routeur(hub) au qui sera connectes plsr circuit pour permaitre la communication avec le reste des routeur tt en economisant des liens(circuits)
+	~ dual-homed					: meme principe que le hub-and spoke avec l'ajout d'un autre hub connecte aux spoke pour garantir la redondance 
+	~ fully meshed				: utilise des liens qui relie tt les routeurs du reseau WAN
+	~ partially meshed			: meme principe que la precedante mais avec des liens en moins
+
+- connexions au transporteur:
+	~ single-carrier WAN-connection		: decrit l'utilisation de connexions a un seul fournisseur de service.
+	~ single-carrier WAN-connection		: decrit l'utilisation de connexions a plsr fournisseurs de services.
+
+- evolutivite du reseau:
+	~ petit reseau			 		: se compose de qlq peripherique reseau et utilise une connexion DSL au fournisseur
+	~ reseau de compus 			: reseau CAN(campus area ...). se compose de qlq serveur d'E-mail, stockage, DNS, firewall...
+	~ reseau de filiale(branch) 	: reseau MAN. se compose de qlq branche relativement proche. necessite des service WAN.
+	~ reseau destribue			: reseau multi-nationale. utilise des app web, VPN, ... pour reduire le cout et garantir la securite.
+	
+- la plupart des standards WAN se concentrent sur la couche 1 et 2 du modele OSI.
+
+- standard WAN de couche 1:
+	~ Synchronous Digital Hierarchy (SDH)
+	~ Synchronous Optical Networking (SONET)
+	~ Dense Wavelength Division Multiplexing (DWDM)	# peut etre utilise pour augmenter la capacitee des deux autres services
+	
+- standard WAN de couche 2:
+	~ Broadband (DSL and Cable)
+	~ Wireless
+	~ Ethernet WAN (Metro Ethernet)
+	~ Multiprotocol Label Switching (MPLS)
+	~ Point-to-Point Protocol (PPP)
+	~ gh-Level Data Link Control (HDLC)			(moins utilise)
+	~ Frame Relay									(legacy)
+	~ Asynchronous Transfer Mode (ATM) 		(legacy)
+	
+- terminologie WAN:
+	~ Data Terminal Equipment (DTE)				: la passerelle du reseau interne vers l'exterieur(routeur/serveur) utilise la boucle locale pour se connecter au DCE.
+	~ Data Communications Equipment (DCE) 		: (équipement de terminaison de circuit de données) l'appareil proccurant une interface pour communiquer avec le fournisseur.
+	~ Customer Premises Equipment (CPE)			: c'est les equipement DTE et DCE de l'entreprise (le client peut louer le CPE du fourniosseur).
+	~ Point-of-Presence (POP)						: C'est le point où l'abonné se connecte au réseau du fournisseur de services.
+	~ Demarcation Point								: emplacement physique qui sépare l'équipement du client de l'équipement du fournisseur de services. Il identifie le lieu responsabilité du client ou du fournisseur.
+	~ Local Loop (last mile)							: Il s'agit du véritable câble en cuivre ou en fibre qui relie le CPE au CO du fournisseur de services.
+	~ Central Office (CO)								: l'installation ou du bâtiment du fournisseur de services local qui connecte le CPE au réseau du fournisseur.
+	~ Toll network										: decrit tt l'equipement du WAN du fournisseur d'acces.
+	~ Backhaul network								: connectent plusieurs nœuds d'accès du réseau du fournisseur de services.  connectés à des fournisseurs de services Internet et au réseau fédérateur.
+	~ Backbone network	(federateur)				:  rands réseaux à grande capacité utilisés pour interconnecter les réseaux des fournisseurs de services et pour créer un réseau redondant.
+
+- equipement WAN:
+	~ Voiceband Modem						: convertit (modulant) les signaux numériques en fréquences vocales analogiques. Utilise des lignes téléphoniques pour transmettre des données.
+	~ DSL Modem / Cable Modem 			: (modems numerique à large bande)  se connectent au routeur DTE via Ethernet. DSL utilise les lignes telephonique,  cable modem utilise des lignes coaxiale.
+	~ CSU/DSU									: necessaire pour les lignes louees. CSU fournit la terminaison pour le signal numérique et assure l'intégrité de connexion(correction des erreurs). DSU convertit les trames de ligne en trames que le LAN peut interpréter. 
+	~ Optical Converter						: connecte les supports a fibre optiques aux supports en cuivre.  
+	~ Wireless Router / Access Point			: ces equipements peuvent utiliser une connexion cellulaire	
+	~ WAN Core devices						: ensemble d'equipement(routeur switch-couche3) super puissant qui garantissent une communication  a haute vitesse.
+
+- communication en serie:
+	~ utilise un seul canal pour la transmission des bits
+	~ preferable pour les langues distance ( communication multi-canal a cause des problemes de synchronisation a grandes distances) 
+	
+- communication a commutation de circuit:
+	~ etablit un circuit de communication entre deux points. établit dynamiquement une connexion virtuelle dédiée via le réseau du fournisseur de services
+	~ utilisee dans Public Switched Ttelephone Network (PSTN) et l'ancien Integrated Services Digital Network (ISDN).
+	~ les communication entre deux point utilisent le meme chemin.
+
+- communication a commutation de paquets:
+	~ segmente le trafic en paquets qui seront routes a travers un reseau partage(reseau de l'ISP partage)
+	~ moins chers et plus flexible mais suceptible au retard(latence)  et a la variabilitee du retard(gigue/jitter) 
+	~ utilise dans Ethernet WAN (Metro Ethernet), MPLS (Multiprotocol Label Switching) et Asynchronous Transfer Mode (ATM).
+	
+- communication avec la fibre optique:
+	~ SDH  (Synchronous Digital Hierarchy)					: standard globale pour la communication avec la fibre optique
+	~ SONET (Synchronous Optical Networking)			: standard americain (meme service).
+	~ DWDM (Dense Wavelength Division Multiplexing)	: une technologie de multiplexage(80 caneaux) qui permet d'augmenter la capacite de transfert de donnees.
+
+- anciennes connectivitees WAN:
+	~ commutee	:
+		- commutation de circuit:
+			~ PSTN
+			~ ISDN
+		- commutation de paquets:
+			~ Frame Relay
+			~ ATM
+	~ dedie		:
+		- ligne dedie
+		
+- connectivitees WAN modernes:
+	~ dedie:
+		- broadband	: DARK-FIBER 
+	~ commute:
+		- commutation de paquets: ethernet WAN / MPLS / VPLS
+	~base sur internet:
+		- broadband VPN:
+			~ cable		: xDSL / cable / fibre
+			~ sans fil	: municipal WI-FI / WIMAX / cellular 
+
+- nomenclature de routeur:
+	~ CE 	: Customer Edge
+	~ PE	: Provider Edge
+	~ P		: Provider		
+
+- DSL:
+
+

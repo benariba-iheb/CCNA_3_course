@@ -1,0 +1,40 @@
+=============================
+chapitre9: conception reseau
+=============================
+
+- reseaux commute sans frontieres: architecture developee par cisco qui repose sur les principes suivant:
+	~ hierarchique	: permet de mieux comprendre le role de chaque appareil, simplifie le deploiement.
+	~ modularite		: permet une expansion et integration de service a la demande.
+	~ resilence		: repond aux attentes des utilisateurs.
+	~flexibilite			: le partage intelligent de la charge de trafic.
+	
+- modele hierarchique:
+	~ modele a 3 niveaux	: access / distribution
+	~ modele a 2 niveaux  : access / distribution / core	
+
+- conception du reseau pour l'evolutivite:
+	~ choisir des equipements extensibles/modulaire qui peuvent etre facilement mis a niveau.
+	~ Concevoire un réseau hiérarchique pour inclure des modules pouvant être ajoutés.
+	~ Établissez une stratégie hiérarchique d'adresses IPv4 ou IPv6. pour évite d'avoir à reconfigurer l'adressage du réseau.
+	~ Choisissez des routeurs ou des commutateurs multicouches pour limiter les diffusions et filtrer le trafic non souhaité sur le réseau. 
+	
+- exigences de conception de réseau avancées:
+	~ Liaisons redondantes				: liens redondant entre les peripherique reseau
+	~ Liens multiples						: etherchannel
+	~ Protocole de routage évolutif		: le bon choix du protocole de routage pour reduire les dimensions de la table de routage et reduire les maj.
+	~ connectivite sans-fil				: la connectivité sans fil permet la mobilité et l'expansion.
+
+- Réduire la taille du domaine défaillant
+	~ il est le plus simple et généralement le moins cher de contrôler les dimensions d'un domaine défaillant au niveau de la couche de distribution. 
+	~  Déploiement de blocs de commutation, Les routeurs, ou commutateurs multicouches, sont généralement déployés par paires, les commutateurs de couche d'accès étant répartis de manière égale sur chaque routeur.
+
+- le debit de transfert fait referance aux taux de donnees que le commutateur peut traite, generalement ce debit est inferieur a la somme des vittesse des ports du commutateur.
+
+- point a considerer lors du choix d'un commutateur:
+	~ cout							
+	~ densite de port			
+	~ alimentation			
+	~ fiabilite						
+	~ vitesse du port				
+	~ tampons de trames		
+	~ extensibilite					

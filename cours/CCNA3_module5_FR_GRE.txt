@@ -1,0 +1,40 @@
+============
+frame relay:
+============
+
+- DLCI: (data link conection identifier) circuit virtuelle dans la boucle locale. utilise par FR pour le multiplexage des trames.
+
+- plusieurs cicuits virtuels peuvent etre configures sur une seul ligne d'acces.
+
+- les trames FR sont de type HDLC avec un champ "protocole" ajoute poue decrire le protocole de couche 3.
+
+- dans une topologie HUB&spoke le HUB utilise un mappage IP/DLCI qui peut etre statique ou dynamique.
+	~ statique		: associe une adresse de saut suivant a un DLCI local
+	~ dynamique	: utilise le "inARP" pour resoudre l'@IP en un DLCI local
+	
+		!! inverse ARP		: utilise pour resoudre une @IP en une valeur DLCI
+		!! reverse ARP	: utilise pour resoudre une @IP en une @MAC connue
+
+- LMI: mécanisme de test d’activité qui fournit des informations sur les connexions entre le DTE et le commutateur FR. 
+
+
+====================================
+GRE:(generic routing encapsulation)
+====================================
+
+- GRE est utilisé quand des paquets IP doivent être envoyés d'un réseau à un autre sans être analysés ni traités par les routeurs intermédiaires.
+
+- le protocole GRE utilise 24 octets donc on aura une MTU = 1500 - 24 = 1476 octets
+
+- paquet GRE:
+	{IP} -- {GRE} -- {IP-encapsule} -- {TCP} --{donnees}
+	
+	{GRE} :	
+		~ indicateurs			
+		~ protocole type		
+
+
+
+
+
+
