@@ -1,0 +1,40 @@
+================================
+configuration: Frame Relay / GRE
+================================
+
+--------------------------
+FRAME RELAY:
+--------------------------
+
+- configuration frame relay:
+	R(config)# interface {interface-ID} 
+	R(config-if)# bandwidth {vitesse}
+	R(config-if)# ip add {@IP} {mask}
+	R(config-if)# encapsulation frame-realy 
+	R(config-if)# frame-relay map ip {@IP} {DLCI} [broadcast] [cisco | ansi | q933a] 			# cette commande est destinee au mappage IP/DLCI statique
+																								# la commande broadcast est utlise pour la diffusion/multi-diffusion du trafic sur les PVC
+	
+- routage dynamique dans Frame Relay:
+	R(config)# interface {interface-ID}
+	R(config-if)# ip ospf network broadcast 
+	R(config-if)# frame-relay map {@IP} {DLCI} broadcast
+
+
+-configuration LMI:
+	R(config-if)# frame-relay lmi-type {cisco | ansi | q933a}
+
+- affichage LMI:
+	R# show frame-relay map
+
+
+--------
+GRE:
+--------
+
+- activation de l'interface tunnel:
+	R(config)# interface tunel {tunnel-ID}
+	R(config-if)# ip address {@IP de l'interface tunnel} {mask}
+	R(config-if)# tunnel mode gre [ip ...] 
+	R(config-if)# tunnel source {interface-ID | @IP publique}
+	R(config-if)# tunnel destination {@IP publique destination}
+

@@ -1,0 +1,55 @@
+=====================================
+configuration: CDP/LLDP/SYSLOG/BTP:
+=====================================
+
+---------
+CDP:
+---------
+
+- activation CDP:
+ 	R(config)# [no] cdp run
+
+- activation CDP par interface:
+	S(config)# interface {interface-ID}
+	S(config-if)# cdp enable
+
+- affichage CDP:
+	R# show cdp 								#  affichage de la configuration du protocole
+	R# show cdp neighbors					# affichage des informations sur les voisins
+	R# show cdp neighbors detail			# affichage des informations detaillees sur les voisins
+	R# show cdp interface					# affichage des informations sur les interfaces configurees 
+
+
+
+----------
+LLDP:
+----------
+
+- activation LLDP:
+	S(config)# lldp run
+
+- activation LLDP par interface:
+	S(config)# interface {interface-ID}
+	S(config-if)# lldp {transmit / receive}
+
+- affichage LLDP:
+	S# show lldp 
+	S# show lldp neighbors
+	S# show lldp neighbors detail
+
+
+
+--------
+NTP:
+--------
+
+- configuration manuelle:
+	R# clock set {hh:mm:ss} {month} {date dd} {year yyyy}				# month : sept, oct, nov....
+	
+- configuration d'un serveur distant comme serv NTP:
+	R1(config)# ntp server {@IP-serveur}
+
+- affichage NTP: 
+	R# show clock detail 					# affiche le temps configure
+	R# show ntp associations   			# affiche les informations sur le serveur NTP
+	S# show ntp status					# affichage des informations sur le peripherique locale
