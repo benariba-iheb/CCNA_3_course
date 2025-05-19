@@ -5,12 +5,12 @@ chapitre9: conception reseau
 - reseaux commute sans frontieres: architecture developee par cisco qui repose sur les principes suivant:
 	~ hierarchique	: permet de mieux comprendre le role de chaque appareil, simplifie le deploiement.
 	~ modularite		: permet une expansion et integration de service a la demande.
-	~ resilence		: repond aux attentes des utilisateurs.
+	~ resilience		: repond aux attentes des utilisateurs.
 	~flexibilite			: le partage intelligent de la charge de trafic.
 	
 - modele hierarchique:
-	~ modele a 3 niveaux	: access / distribution
-	~ modele a 2 niveaux  : access / distribution / core	
+	~ modele a 2 niveaux	: access / distribution
+	~ modele a 3 niveaux  : access / distribution / core	
 
 - conception du reseau pour l'evolutivite:
 	~ choisir des equipements extensibles/modulaire qui peuvent etre facilement mis a niveau.
